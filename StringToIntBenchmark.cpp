@@ -17,7 +17,7 @@ static void BM_fast_atoi(benchmark::State& state){
   int a = 0;
   while (state.KeepRunning()){
     for (int i = 0; i < state.range(0); ++i){
-      a = fast_atoi(stringV[i].c_str());
+      benchmark::DoNotOptimize(a = fast_atoi(stringV[i].c_str()));
     }
   }
 }
@@ -29,7 +29,7 @@ static void BM_atoi(benchmark::State& state){
   int a = 0;
   while (state.KeepRunning()){
     for (int i = 0; i < state.range(0); ++i){
-      a = atoi(stringV[i].c_str());
+      benchmark::DoNotOptimize(a = atoi(stringV[i].c_str()));
     }
   }
 }
@@ -41,7 +41,7 @@ static void BM_stoi(benchmark::State& state){
   int a = 0;
   while (state.KeepRunning()){
     for (int i = 0; i < state.range(0); ++i){
-      a = stoi(stringV[i].c_str());
+      benchmark::DoNotOptimize(a = stoi(stringV[i].c_str()));
     }
   }
 }
@@ -54,7 +54,7 @@ static void BM_sstream(benchmark::State& state){
   while (state.KeepRunning()){
     for (int i = 0; i < state.range(0); ++i){
       istringstream ss(stringV[i]);
-      ss >> a;
+      benchmark::DoNotOptimize(ss >> a);
     }
   }
 }
@@ -66,7 +66,7 @@ static void BM_lexicalCast(benchmark::State& state){
   int a = 0;
   while (state.KeepRunning()){
     for (int i = 0; i < state.range(0); ++i){
-      a = boost::lexical_cast<int>(stringV[i]);
+      benchmark::DoNotOptimize(a = boost::lexical_cast<int>(stringV[i]));
     }
   }
 }
@@ -80,7 +80,7 @@ static void BM_qiParse(benchmark::State& state){
   int a = 0;
   while (state.KeepRunning()){
     for (int i = 0; i < state.range(0); ++i){
-      qi::parse(stringV[i].begin(), stringV[i].end(), int_, a);
+      benchmark::DoNotOptimize(qi::parse(stringV[i].begin(), stringV[i].end(), int_, a));
     }
   }
 } 
