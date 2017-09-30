@@ -41,7 +41,7 @@ static void BM_stoi(benchmark::State& state){
   int a = 0;
   while (state.KeepRunning()){
     for (int i = 0; i < state.range(0); ++i){
-      benchmark::DoNotOptimize(a = stoi(stringV[i].c_str()));
+      benchmark::DoNotOptimize(a = stoi(stringV[i]));
     }
   }
 }
