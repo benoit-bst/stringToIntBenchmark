@@ -13,12 +13,12 @@ Only the difference between functions are significant
 
 ## Environment
 
-Required tools and library
+Required tools and libraries
 
-* cmake >= 3.0.2
-* gcc >= 4.9.2
-* clang >= 3.5.0
-* libboost-all-dev >= 1.55.0
+* cmake >= 3.5.1
+* gcc >= 5.4.0
+* clang >= 3.8.0
+* libboost-all-dev >= 1.58.0
 
 debian installation 
 
@@ -29,7 +29,7 @@ apt-get install cmake g++ clang libboost-all-dev
 ## Source recovery
 
 ```
-git clone StringtoIntBenchmark
+git clone https://github.com/benoit-bst/stringToIntBenchmark
 cd StringtoIntBenchmark 
 git submodule update --init
 ```
@@ -57,75 +57,45 @@ for each function, we test 7 sizes of string (1->7)
 
 ## Tests configuration
 
-* gcc 4.9.2 and clang 3.5.0
-* arch : x86_64-linux-gnu
-* Run on (8 X 3900 MHz CPU s)
-* gcc flag   : release -O3 / debug -O0
-* clang flag : release -O3 / debug -O0
+* gcc 5.4.0 and clang 3.8.0
+* arch : x86_64
+* cpu : I7-2640M
+* gcc flag   : -O3
+* clang flag : -O3
 
 ## Tests Results
 
 ```
 atoi reference
 
-1. GCC 4.9.2 RELEASE
+1. GCC 4.9.2
 
-------------------------------
-Benchmark                  CPU
-------------------------------
-BM_fast_atoi             25 ns    
-BM_atoi                  80 ns
-BM_stoi                 333 ns       
-BM_sstream             2261 ns    
-BM_lexicalCast          201 ns       
-BM_qiParse                2 ns       
+--------------------------------------------------------
+Benchmark                 Time           CPU Iterations
+--------------------------------------------------------
+BM_fast_atoi/7           34 ns         34 ns   16566159
+BM_atoi/7               161 ns        161 ns    4321834
+BM_stoi/7               164 ns        164 ns    4242043
+BM_sstream/7           2942 ns       2941 ns     239618
+BM_lexicalCast/7        225 ns        225 ns    3117588
+BM_qiParse/7             42 ns         42 ns   16581565    
 
 
-2. CLANG 3.5.0 RELEASE
+2. CLANG 3.5.0
 
-------------------------------
-Benchmark                  CPU
-------------------------------
-BM_fast_atoi             26 ns         
-BM_atoi                   2 ns
-BM_stoi                 352 ns        
-BM_sstream             2281 ns      
-BM_lexicalCast          193 ns       
-BM_qiParse               24 ns         
-
-3. GCC 4.9.2 DEBUG
-
-------------------------------
-Benchmark                  CPU
-------------------------------
-BM_fast_atoi            116 ns        
-BM_atoi                 130 ns
-BM_stoi                 500 ns        
-BM_sstream             2329 ns       
-BM_lexicalCast          572 ns        
-BM_qiParse             1345 ns       
-
-4. CLANG 3.5.0 DEBUG
-
-------------------------------
-Benchmark                  CPU
-------------------------------
-BM_fast_atoi            115 ns        
-BM_atoi                 135 ns
-BM_stoi                 493 ns        
-BM_sstream             2313 ns       
-BM_lexicalCast          538 ns        
-BM_qiParse             1119 ns       
+--------------------------------------------------------
+Benchmark                 Time           CPU Iterations
+--------------------------------------------------------
+BM_fast_atoi/7           33 ns         33 ns   17135422
+BM_atoi/7               162 ns        162 ns    4318101
+BM_stoi/7               161 ns        161 ns    4318646
+BM_sstream/7           2742 ns       2742 ns     253361
+BM_lexicalCast/7        324 ns        324 ns    2163453
+BM_qiParse/7             67 ns         67 ns   10338957 
 
 ```
 
 ## Conclusion
 
-Whitout O3 optimization gcc et clang results are the same. Naive implementation is the better way.
-
-But with O3 optimization, there are not the same results. Clang compiler seems to make better optimization for atoi function (2 ns) than gcc compiler.
-With gcc compiler, the best result is given by spirit::qi::parse (2 ns). 
-
-Boost spirit::qi::parse probably uses Gcc's 03 optimizations better, while Clang seems to completely optimize the atoi function.
-
-Note : 2 ns seems to be the minimum measurement.
+Whether with Gcc or Clang, the naive function offers the best performance.
+So use your own atoi function.
